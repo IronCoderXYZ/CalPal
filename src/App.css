@@ -1,0 +1,40 @@
+body {
+  text-align: center;
+  background: #506f42;
+  padding: 50px;
+  padding-top: 10px;
+  color: #ecf4ca;
+}
+
+.overview {
+  background: RGBA(165, 190, 99, 0.9);
+  border-radius: 5px;
+  padding: 20px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.overview-title {
+  padding-bottom: 10px;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.overview-subtitle {
+  font-size: 1rem;
+  margin: 10px;
+}
+
+.fa {
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+}
+
+/* .overview:hover {
+  border: 15px solid #4c678c;
+  transform: scale(1.1);
+  animation: ease-in(300);
+} */
