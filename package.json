@@ -2,9 +2,12 @@
   "name": "calpal",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ironcoderxyz.github.io/CalPal",
   "dependencies": {
     "font-awesome": "^4.7.0",
+    "gh-pages": "^1.1.0",
     "react": "^16.3.1",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.1",
     "react-scripts": "1.1.4",
     "tachyons": "^4.9.1"
@@ -13,6 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "npm run build&&gh-pages -d build"
   }
 }

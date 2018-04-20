@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import Keyboard from './components/Keyboard';
 // import logo from './logo.svg';
 import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -12,6 +14,17 @@ class App extends Component {
       this.setState({ consumed: Number(lastSessionConsumed) });
     }
   }
+
+  onChangeKeyboard = number => {
+    const { input } = this.state;
+    const numberString = String(number);
+    if (number === 'x')
+      return this.setState({ input: this.state.input.slice(0, -1) });
+    if (input === 0) {
+      return this.setState({ input: numberString });
+    }
+    this.setState({ input: (this.state.input += numberString) });
+  };
 
   subtractCalories(calories) {
     const { consumed } = this.state;
@@ -64,6 +77,7 @@ class App extends Component {
           onChange={e => this.onInputChange(e)}
         />
         <br />
+        <Keyboard onChange={number => this.onChangeKeyboard(number)} />
         <i
           onClick={() => this.subtractCalories(Number(this.state.input))}
           className="fa fa-minus fa-4x"
