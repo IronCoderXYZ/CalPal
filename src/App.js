@@ -57,12 +57,14 @@ class App extends Component {
 
     return (
       <div className="overview">
-        <p className="overview-title">Overview</p>
-        <p className="overview-subtitle">Daily Goal:</p>
-        <p className="overview-subtitle">{`${goal} kCal`}</p>
-        <p className="overview-subtitle">Consumed</p>
-        <p className="overview-subtitle">{`${consumed} kCal`}</p>
-        {this.renderAdd()}
+        <div>
+          <p className="overview-subtitle">Target Goal:</p>
+          <p className="overview-subtitle">{`${goal} kCal`}</p>
+        </div>
+        <div>
+          <p className="overview-subtitle">Consumed:</p>
+          <p className="overview-subtitle">{`${consumed} kCal`}</p>
+        </div>
       </div>
     );
   }
@@ -93,11 +95,8 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <h1 className="app-title">CalcPal</h1>
-        </header>
         {this.renderOverview()}
+        {this.renderAdd()}
       </div>
     );
   }

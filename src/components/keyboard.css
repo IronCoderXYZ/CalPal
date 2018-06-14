@@ -1,5 +1,5 @@
 body {
-  color: #ecf4ca;
+  color: #eee;
 }
 
 .row {
@@ -31,7 +31,7 @@ table tr td {
 }
 
 .border-cell {
-  border: 2px #506f42;
+  border: 2px #eee;
   border-style: solid;
   padding: 10px 20px;
 }

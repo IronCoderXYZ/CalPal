@@ -1,25 +1,14 @@
 body {
-  text-align: center;
-  background: #506f42;
   padding: 50px;
+  color: #eee;
+  background: black;
   padding-top: 10px;
-  color: #ecf4ca;
+  text-align: center;
 }
 
 .overview {
-  background: RGBA(165, 190, 99, 0.9);
-  border-radius: 5px;
-  padding: 20px;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-}
-
-.overview-title {
-  padding-bottom: 10px;
-  font-size: 1.4rem;
-  margin: 0;
+  display: flex;
+  justify-content: space-around;
 }
 
 .overview-subtitle {
