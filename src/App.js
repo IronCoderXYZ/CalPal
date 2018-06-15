@@ -33,7 +33,11 @@ class App extends Component {
   }
 
   componentWillMount() {
+    const goal = localStorage.getItem('goal');
     const lastSessionConsumed = localStorage.getItem('lastConsumed');
+    if (goal) {
+      this.setState({ goal });
+    }
     if (lastSessionConsumed) {
       this.setState({ consumed: Number(lastSessionConsumed) });
     }
@@ -41,6 +45,7 @@ class App extends Component {
 
   onGoalsSave() {
     this.setState({ goal: this.state.newGoal, viewIndex: 0 });
+    localStorage.setItem('goal', this.state.newGoal);
   }
 
   onGoalsUpdate({ target }) {
