@@ -1,5 +1,6 @@
 // NPM Imports
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 // Local Imports
 import './App.css';
 import Add from './components/Add';
@@ -11,7 +12,6 @@ import UpdateGoals from './components/UpdateGoals';
 Index
 0 = Keyboard
 1 = Update Goals
-2 = Foods
 */
 
 class App extends Component {
@@ -22,12 +22,11 @@ class App extends Component {
       goal: 2250,
       newGoal: 0,
       consumed: 0,
-      viewIndex: 2
+      viewIndex: 0
     };
     this.addCalories = this.addCalories.bind(this);
     this.onClickGoal = this.onClickGoal.bind(this);
     this.onGoalsSave = this.onGoalsSave.bind(this);
-    this.onClickFoods = this.onClickFoods.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onGoalsUpdate = this.onGoalsUpdate.bind(this);
     this.subtractCalories = this.subtractCalories.bind(this);
@@ -43,12 +42,6 @@ class App extends Component {
     if (lastSessionConsumed) {
       this.setState({ consumed: Number(lastSessionConsumed) });
     }
-  }
-
-  onClickFoods() {
-    this.setState(({ viewIndex }) => {
-      return { viewIndex: viewIndex === 2 ? 0 : 2 };
-    });
   }
 
   onGoalsSave() {
@@ -114,12 +107,6 @@ class App extends Component {
             onSave={this.onGoalsSave}
             onInputChange={this.onGoalsUpdate}
           />
-        );
-      case 2:
-        return (
-          <div>
-            <Foods />
-          </div>
         );
     }
   }
