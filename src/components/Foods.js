@@ -1,4 +1,17 @@
 // NPM Imports
+import {
+  Row,
+  Col,
+  Card,
+  Alert,
+  Button,
+  CardText,
+  CardBody,
+  CardTitle,
+  Container,
+  CardSubtitle,
+  Table
+} from 'reactstrap';
 import Styled from 'styled-components';
 import React, { Component, Fragment } from 'react';
 // Local Imports
@@ -6,9 +19,17 @@ import React, { Component, Fragment } from 'react';
 export default class Food extends Component {
   constructor(props) {
     super(props);
-    this.state = { foods: [], newFoodName: '', newFoodCalories: 0 };
+    this.state = {
+      foods: [],
+      error: false,
+      success: false,
+      newFoodName: '',
+      newFoodCalories: ''
+    };
     this.onSave = this.onSave.bind(this);
+    this.dismissError = this.dismissError.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
+    this.dismissSuccess = this.dismissSuccess.bind(this);
     this.onChangeCalories = this.onChangeCalories.bind(this);
   }
 
@@ -28,10 +49,15 @@ export default class Food extends Component {
 
   onSave() {
     const { foods, newFoodName, newFoodCalories } = this.state;
+    if (!newFoodName || !newFoodCalories) {
+      return this.setState({ error: true, success: false });
+    }
     this.setState({
-      foods: [...foods, { name: newFoodName, calories: newFoodCalories }],
+      error: false,
+      success: true,
       newFoodName: '',
-      newFoodCalories: 0
+      newFoodCalories: '',
+      foods: [...foods, { name: newFoodName, calories: newFoodCalories }]
     });
     localStorage.setItem(
       'foods',
@@ -50,65 +76,81 @@ export default class Food extends Component {
     this.setState({ newFoodCalories: target.value });
   }
 
+  dismissError() {
+    this.setState({ error: false });
+  }
+
+  dismissSuccess() {
+    this.setState({ success: false });
+  }
+
   render() {
-    const { foods } = this.state;
+    const { foods, error, success } = this.state;
     return (
-      <div>
-        <p className="overview-title">Add Foods</p>
-        <AddFoodsSection
-          {...this.state}
-          onSave={this.onSave}
-          onChangeName={this.onChangeName}
-          onChangeCalories={this.onChangeCalories}
-        />
+      <Container>
+        <Col sm="12">
+          <AddFoodsSection
+            {...this.state}
+            onSave={this.onSave}
+            onChangeName={this.onChangeName}
+            onChangeCalories={this.onChangeCalories}
+          />
+        </Col>
+        <Col sm="12">
+          <Alert color="danger" isOpen={error} toggle={this.dismissError}>
+            Brah, error in input values...
+          </Alert>
+          <Alert color="success" isOpen={success} toggle={this.dismissSuccess}>
+            Brah, change saved!
+          </Alert>
+        </Col>
         {foods.length > 0 &&
           foods.map((food, index) => (
-            <Card key={food.name}>
-              <Ptag>{food.name}</Ptag>
-              <Ptag>{food.calories}</Ptag>
-              <Icon
-                className="fa fa-trash"
-                onClick={() => this.onDelete(index)}
-              />
-            </Card>
+            <Col sm="6" className="my-1">
+              <Card key={food.index} className="texft-center">
+                <div
+                  className="my-3"
+                  style={{ display: 'flex', justifyContent: 'space-around' }}
+                >
+                  <span className="text-center text-dark">
+                    <span>Name:</span>
+                    <br />
+                    <span>{food.name}</span>
+                  </span>
+                  <span className="text-center text-dark">
+                    <span>Calories:</span>
+                    <br />
+                    <span>{food.calories} /g</span>
+                  </span>
+                </div>
+                <div
+                  className="mb-3"
+                  style={{ display: 'flex', justifyContent: 'space-around' }}
+                >
+                  <Button
+                    outline
+                    color="danger"
+                    className="mx-4"
+                    onClick={() => this.onDelete(index)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    outline
+                    color="primary"
+                    className="mx-4"
+                    onClick={() => {}}
+                  >
+                    Select
+                  </Button>
+                </div>
+              </Card>
+            </Col>
           ))}
-      </div>
+      </Container>
     );
   }
 }
-
-const AddFoods = Styled.section`
-  width: 90%;
-  margin: auto;
-  padding: 10px;
-  border: solid 1px white;
-`;
-
-const InputFields = Styled.section`
-  height: 75px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const Card = Styled.div`
-  height: 60px;
-  margin: 20px;
-  display: flex;
-  border: dashed 1px white;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Ptag = Styled.p`
-  margin: 0;
-  padding: 2px;
-`;
-
-const Icon = Styled.i`
-  right: 80px;
-  position: absolute;
-`;
 
 const AddFoodsSection = ({
   newFoodName,
@@ -117,21 +159,28 @@ const AddFoodsSection = ({
   onChangeName,
   onChangeCalories
 }) => (
-  <AddFoods>
-    <InputFields>
+  <Card className="text-center mb-3">
+    <CardBody>
+      <CardTitle className="text-dark">Add Food</CardTitle>
       <input
+        className="mt-1 mb-1"
         type="string"
         placeholder="Name"
         value={newFoodName}
         onChange={onChangeName}
       />
+      <br />
       <input
+        className="m-3 mb-4"
         type="number"
         placeholder="kCal /g"
         value={newFoodCalories}
         onChange={onChangeCalories}
       />
-    </InputFields>
-    <i className="fa fa-check fa-2x" onClick={onSave} />
-  </AddFoods>
+      <br />
+      <Button color="primary" onClick={onSave}>
+        Save
+      </Button>
+    </CardBody>
+  </Card>
 );

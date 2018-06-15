@@ -1,5 +1,14 @@
 import React, { Fragment } from 'react';
 import Keyboard from './Keyboard';
+import {
+  Col,
+  Card,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Button
+} from 'reactstrap';
 
 export default ({
   input,
@@ -8,18 +17,36 @@ export default ({
   addCalories,
   onChangeKeyboard
 }) => (
-  <Fragment>
-    <p className="overview-title">Add Calories</p>
-    <input disabled type="number" value={input} onChange={onInputChange} />
-    <br />
-    <Keyboard onChange={number => onChangeKeyboard(number)} />
-    <i
-      className="fa fa-minus fa-4x"
-      onClick={() => subtractCalories(Number(input))}
-    />
-    <i
-      className="fa fa-plus fa-4x"
-      onClick={() => addCalories(Number(input))}
-    />
-  </Fragment>
+  <Col sm="12">
+    <Card className="px-5 text-dark text-center">
+      <p className="my-3">Add Calories</p>
+      <InputGroup>
+        <InputGroupAddon addonType="prepend">
+          <InputGroupText>Calories:</InputGroupText>
+        </InputGroupAddon>
+        <Input disabled type="number" value={input} onChange={onInputChange} />
+      </InputGroup>
+      <Keyboard onChange={number => onChangeKeyboard(number)} />
+
+      <div
+        className="my-3"
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
+        <Button
+          color="danger"
+          className="px-4"
+          onClick={() => subtractCalories(Number(input))}
+        >
+          Sub
+        </Button>
+        <Button
+          color="primary"
+          className="px-4"
+          onClick={() => addCalories(Number(input))}
+        >
+          Add
+        </Button>
+      </div>
+    </Card>
+  </Col>
 );

@@ -27,13 +27,13 @@ table {
 
 table tr td {
   font-size: 22px;
-  padding: 5px;
+  padding: 4px;
 }
 
 .border-cell {
-  border: 2px #eee;
-  border-style: solid;
+  border: solid 1px #303e4e;
   padding: 10px 20px;
+  border-radius: 50%;
 }
 
 .border-cell:hover {

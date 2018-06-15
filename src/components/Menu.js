@@ -11,6 +11,7 @@ import {
   NavLink
 } from 'reactstrap';
 // Local Imports
+import Logo from './favicon.ico';
 
 export default class Menu extends Component {
   constructor(props) {
@@ -27,11 +28,13 @@ export default class Menu extends Component {
     return (
       <div>
         <Navbar color="faded">
-          <NavbarBrand className="mr-auto">CalPal</NavbarBrand>
-          <NavbarToggler
-            onClick={this.toggleNavbar}
-            className="mr-2 bg-light"
-          />
+          <NavbarBrand className="mr-auto">
+            <img alt="logo" src={Logo} height="30px" />
+            CalPal
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2 bg-light">
+            &#9776;
+          </NavbarToggler>
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>

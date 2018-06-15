@@ -9,6 +9,10 @@ import Menu from './components/Menu';
 import Foods from './components/Foods';
 import registerServiceWorker from './registerServiceWorker';
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 ReactDOM.render(
   <Router>
     <Fragment>

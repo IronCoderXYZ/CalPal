@@ -1,18 +1,25 @@
 // NPM Imports
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Row,
+  Col,
+  Card,
+  Alert,
+  Button,
+  CardText,
+  CardBody,
+  CardTitle,
+  Container,
+  CardSubtitle,
+  Table
+} from 'reactstrap';
 // Local Imports
 import './App.css';
 import Add from './components/Add';
 import Foods from './components/Foods';
 import Overview from './components/Overview';
 import UpdateGoals from './components/UpdateGoals';
-
-/*
-Index
-0 = Keyboard
-1 = Update Goals
-*/
 
 class App extends Component {
   constructor(props) {
@@ -22,13 +29,14 @@ class App extends Component {
       goal: 2250,
       newGoal: 0,
       consumed: 0,
-      viewIndex: 0
+      showUpdateGoal: false
     };
     this.addCalories = this.addCalories.bind(this);
     this.onClickGoal = this.onClickGoal.bind(this);
     this.onGoalsSave = this.onGoalsSave.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onGoalsUpdate = this.onGoalsUpdate.bind(this);
+    this.onGoalsCancel = this.onGoalsCancel.bind(this);
     this.subtractCalories = this.subtractCalories.bind(this);
     this.onChangeKeyboard = this.onChangeKeyboard.bind(this);
   }
@@ -44,8 +52,12 @@ class App extends Component {
     }
   }
 
+  onGoalsCancel() {
+    this.setState({ showUpdateGoal: false });
+  }
+
   onGoalsSave() {
-    this.setState({ goal: this.state.newGoal, viewIndex: 0 });
+    this.setState({ goal: this.state.newGoal, showUpdateGoal: false });
     localStorage.setItem('goal', this.state.newGoal);
   }
 
@@ -54,8 +66,8 @@ class App extends Component {
   }
 
   onClickGoal() {
-    this.setState(({ viewIndex }) => {
-      return { viewIndex: viewIndex === 1 ? 0 : 1 };
+    this.setState(({ showUpdateGoal }) => {
+      return { showUpdateGoal: !showUpdateGoal };
     });
   }
 
@@ -80,7 +92,7 @@ class App extends Component {
   onChangeKeyboard = number => {
     const { input } = this.state;
     const numberString = String(number);
-    if (number === 'x')
+    if (number === '<')
       return this.setState({ input: this.state.input.slice(0, -1) });
     if (input === 0) {
       return this.setState({ input: numberString });
@@ -89,7 +101,7 @@ class App extends Component {
   };
 
   renderContent() {
-    switch (this.state.viewIndex) {
+    switch (this.state.showUpdateGoal) {
       default:
         return (
           <Add
@@ -100,11 +112,12 @@ class App extends Component {
             onChangeKeyboard={this.onChangeKeyboard}
           />
         );
-      case 1:
+      case true:
         return (
           <UpdateGoals
             {...this.state}
             onSave={this.onGoalsSave}
+            onCancel={this.onGoalsCancel}
             onInputChange={this.onGoalsUpdate}
           />
         );
@@ -113,14 +126,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <Container className="">
         <Overview
           {...this.state}
           onClickGoal={this.onClickGoal}
           onClickFoods={this.onClickFoods}
         />
         {this.renderContent()}
-      </div>
+      </Container>
     );
   }
 }
