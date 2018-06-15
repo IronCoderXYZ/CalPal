@@ -1,16 +1,20 @@
 // NPM Imports
 import {
-  Row,
   Col,
   Card,
   Alert,
+  Input,
+  Modal,
   Button,
-  CardText,
   CardBody,
-  CardTitle,
   Container,
-  CardSubtitle,
-  Table
+  ModalBody,
+  CardTitle,
+  InputGroup,
+  ModalFooter,
+  ModalHeader,
+  InputGroupText,
+  InputGroupAddon
 } from 'reactstrap';
 import Styled from 'styled-components';
 import React, { Component, Fragment } from 'react';
@@ -24,13 +28,18 @@ export default class Food extends Component {
       error: false,
       success: false,
       newFoodName: '',
-      newFoodCalories: ''
+      newFoodCalories: '',
+      showFoodModal: false,
+      selectedFoodIndex: 0,
+      selectedFoodGrams: 0
     };
     this.onSave = this.onSave.bind(this);
     this.dismissError = this.dismissError.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.dismissSuccess = this.dismissSuccess.bind(this);
+    this.toggleFoodModal = this.toggleFoodModal.bind(this);
     this.onChangeCalories = this.onChangeCalories.bind(this);
+    this.onChangeGramsFood = this.onChangeGramsFood.bind(this);
   }
 
   componentWillMount() {
@@ -38,6 +47,18 @@ export default class Food extends Component {
     if (foods) {
       this.setState({ foods });
     }
+  }
+
+  onChangeGramsFood({ target }) {
+    this.setState({ selectedFoodGrams: target.value });
+  }
+
+  toggleFoodModal(index) {
+    this.setState({
+      selectedFoodGrams: 0,
+      selectedFoodIndex: index,
+      showFoodModal: !this.state.showFoodModal
+    });
   }
 
   onDelete(index) {
@@ -85,7 +106,11 @@ export default class Food extends Component {
   }
 
   render() {
-    const { foods, error, success } = this.state;
+    const { foods, error, success, selectedFoodIndex } = this.state;
+    const calculatedFood =
+      foods.length > 0
+        ? this.state.selectedFoodGrams * foods[selectedFoodIndex].calories
+        : 0;
     return (
       <Container>
         <Col sm="12">
@@ -96,6 +121,36 @@ export default class Food extends Component {
             onChangeCalories={this.onChangeCalories}
           />
         </Col>
+        <Modal
+          isOpen={this.state.showFoodModal}
+          toggle={() => this.toggleFoodModal(0)}
+          className="mt-5 text-dark"
+        >
+          <ModalHeader toggle={() => this.toggleFoodModal(0)}>
+            {foods.length > 0 ? foods[selectedFoodIndex].name : null}
+          </ModalHeader>
+          <ModalBody>
+            <p className="text-center">{`${calculatedFood} kCal`}</p>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Grams:</InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="number"
+                onChange={this.onChangeGramsFood}
+                value={this.state.selectedFoodGrams}
+              />
+            </InputGroup>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={() => this.toggleFoodModal(0)}>
+              Cancel
+            </Button>
+            <Button color="primary" onClick={this.toggleFoodModal}>
+              Save
+            </Button>
+          </ModalFooter>
+        </Modal>
         <Col sm="12">
           <Alert color="danger" isOpen={error} toggle={this.dismissError}>
             Brah, error in input values...
@@ -106,7 +161,7 @@ export default class Food extends Component {
         </Col>
         {foods.length > 0 &&
           foods.map((food, index) => (
-            <Col sm="6" className="my-1">
+            <Col sm="6" className="mb-3">
               <Card key={food.index} className="texft-center">
                 <div
                   className="my-3"
@@ -139,7 +194,7 @@ export default class Food extends Component {
                     outline
                     color="primary"
                     className="mx-4"
-                    onClick={() => {}}
+                    onClick={() => this.toggleFoodModal(index)}
                   >
                     Select
                   </Button>
