@@ -1,18 +1,74 @@
+// NPM Imports
 import React, { Component } from 'react';
-
-import Keyboard from './components/Keyboard';
-// import logo from './logo.svg';
+// Local Imports
 import './App.css';
-import 'font-awesome/css/font-awesome.min.css';
+import Add from './components/Add';
+import Keyboard from './components/Keyboard';
+import Overview from './components/Overview';
+import UpdateGoals from './components/UpdateGoals';
+
+/*
+Index
+0 = Keyboard
+1 = Update Goals
+*/
 
 class App extends Component {
-  state = { consumed: 0, goal: 2250, input: 0 };
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: 0,
+      goal: 2250,
+      newGoal: 0,
+      consumed: 0,
+      viewIndex: 0
+    };
+    this.addCalories = this.addCalories.bind(this);
+    this.updateGoals = this.updateGoals.bind(this);
+    this.onGoalsSave = this.onGoalsSave.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onGoalsUpdate = this.onGoalsUpdate.bind(this);
+    this.subtractCalories = this.subtractCalories.bind(this);
+    this.onChangeKeyboard = this.onChangeKeyboard.bind(this);
+  }
 
   componentWillMount() {
     const lastSessionConsumed = localStorage.getItem('lastConsumed');
     if (lastSessionConsumed) {
       this.setState({ consumed: Number(lastSessionConsumed) });
     }
+  }
+
+  onGoalsSave() {
+    this.setState({ goal: this.state.newGoal, viewIndex: 0 });
+  }
+
+  onGoalsUpdate({ target }) {
+    this.setState({ newGoal: target.value });
+  }
+
+  updateGoals() {
+    this.setState(({ viewIndex }) => {
+      return { viewIndex: viewIndex === 1 ? 0 : 1 };
+    });
+  }
+
+  onInputChange({ target }) {
+    this.setState({ input: target.value });
+  }
+
+  subtractCalories(calories) {
+    const { consumed } = this.state;
+    let totalCalories = consumed - calories;
+    this.setState({ input: 0, consumed: totalCalories });
+    localStorage.setItem('lastConsumed', totalCalories);
+  }
+
+  addCalories(calories) {
+    const { consumed } = this.state;
+    let totalCalories = (calories += consumed);
+    this.setState({ input: 0, consumed: totalCalories });
+    localStorage.setItem('lastConsumed', totalCalories);
   }
 
   onChangeKeyboard = number => {
@@ -26,77 +82,34 @@ class App extends Component {
     this.setState({ input: (this.state.input += numberString) });
   };
 
-  subtractCalories(calories) {
-    const { consumed } = this.state;
-    let totalCalories = consumed - calories;
-    this.setState({
-      input: 0,
-      consumed: totalCalories
-    });
-    localStorage.setItem('lastConsumed', totalCalories);
-  }
-
-  addCalories(calories) {
-    const { consumed } = this.state;
-    let totalCalories = (calories += consumed);
-    this.setState({
-      input: 0,
-      consumed: totalCalories
-    });
-    localStorage.setItem('lastConsumed', totalCalories);
-  }
-
-  onInputChange({ target }) {
-    this.setState({
-      input: target.value
-    });
-  }
-
-  renderOverview() {
-    const { consumed, goal } = this.state;
-
-    return (
-      <div className="overview">
-        <div>
-          <p className="overview-subtitle">Target Goal:</p>
-          <p className="overview-subtitle">{`${goal} kCal`}</p>
-        </div>
-        <div>
-          <p className="overview-subtitle">Consumed:</p>
-          <p className="overview-subtitle">{`${consumed} kCal`}</p>
-        </div>
-      </div>
-    );
-  }
-
-  renderAdd() {
-    return (
-      <div>
-        <p className="overview-title">Add Calories</p>
-        <input
-          value={this.state.input}
-          type="number"
-          onChange={e => this.onInputChange(e)}
-        />
-        <br />
-        <Keyboard onChange={number => this.onChangeKeyboard(number)} />
-        <i
-          onClick={() => this.subtractCalories(Number(this.state.input))}
-          className="fa fa-minus fa-4x"
-        />
-        <i
-          onClick={() => this.addCalories(Number(this.state.input))}
-          className="fa fa-plus fa-4x"
-        />
-      </div>
-    );
+  renderContent() {
+    switch (this.state.viewIndex) {
+      default:
+        return (
+          <Add
+            {...this.state}
+            addCalories={this.addCalories}
+            onInputChange={this.onInputChange}
+            subtractCalories={this.subtractCalories}
+            onChangeKeyboard={this.onChangeKeyboard}
+          />
+        );
+      case 1:
+        return (
+          <UpdateGoals
+            {...this.state}
+            onSave={this.onGoalsSave}
+            onInputChange={this.onGoalsUpdate}
+          />
+        );
+    }
   }
 
   render() {
     return (
       <div className="app">
-        {this.renderOverview()}
-        {this.renderAdd()}
+        <Overview {...this.state} onClick={this.updateGoals} />
+        {this.renderContent()}
       </div>
     );
   }
