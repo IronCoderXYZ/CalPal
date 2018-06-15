@@ -4,12 +4,15 @@
   "private": true,
   "homepage": "https://ironcoderxyz.github.io/CalPal",
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "font-awesome": "^4.7.0",
     "gh-pages": "^1.1.0",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "reactstrap": "^6.1.0",
     "styled-components": "^3.3.2",
     "tachyons": "^4.9.1"
   },
