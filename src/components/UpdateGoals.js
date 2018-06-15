@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   Col,
   Card,

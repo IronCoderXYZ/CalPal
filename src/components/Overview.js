@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Alert,
-  Button,
-  CardText,
-  CardBody,
-  CardTitle,
-  Container,
-  CardSubtitle,
-  Table
-} from 'reactstrap';
+import { Col, Card } from 'reactstrap';
 
 export default ({ viewIndex, consumed, goal, onClickGoal, onClickFoods }) => (
   <Col sm="12" className="">

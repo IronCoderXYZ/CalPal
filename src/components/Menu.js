@@ -2,13 +2,12 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
+  Navbar,
   NavItem,
-  NavLink
+  Collapse,
+  NavbarBrand,
+  NavbarToggler
 } from 'reactstrap';
 // Local Imports
 import Logo from './favicon.ico';

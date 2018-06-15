@@ -1,4 +1,6 @@
 // NPM Imports
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import {
   Col,
   Card,
@@ -16,15 +18,13 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
-import Styled from 'styled-components';
-import React, { Component, Fragment } from 'react';
 // Local Imports
+import * as actions from '../actions';
 
-export default class Food extends Component {
+class Foods extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foods: [],
       error: false,
       success: false,
       newFoodName: '',
@@ -43,10 +43,7 @@ export default class Food extends Component {
   }
 
   componentWillMount() {
-    const foods = JSON.parse(localStorage.getItem('foods'));
-    if (foods) {
-      this.setState({ foods });
-    }
+    this.props.dispatch({ type: actions.FETCH_FOODS });
   }
 
   onChangeGramsFood({ target }) {
@@ -62,31 +59,26 @@ export default class Food extends Component {
   }
 
   onDelete(index) {
-    const newFoods = this.state.foods;
-    newFoods.splice(index, 1);
-    this.setState({ foods: newFoods });
-    localStorage.setItem('foods', newFoods);
+    // const newFoods = this.state.foods;
+    // newFoods.splice(index, 1);
+    // this.setState({ foods: newFoods });
+    // localStorage.setItem('foods', newFoods);
   }
 
   onSave() {
-    const { foods, newFoodName, newFoodCalories } = this.state;
+    const { foods } = this.props;
+    const { newFoodName, newFoodCalories } = this.state;
     if (!newFoodName || !newFoodCalories) {
       return this.setState({ error: true, success: false });
     }
+    const newFood = { name: newFoodName, calories: newFoodCalories };
     this.setState({
       error: false,
       success: true,
       newFoodName: '',
-      newFoodCalories: '',
-      foods: [...foods, { name: newFoodName, calories: newFoodCalories }]
+      newFoodCalories: ''
     });
-    localStorage.setItem(
-      'foods',
-      JSON.stringify([
-        ...foods,
-        { name: newFoodName, calories: newFoodCalories }
-      ])
-    );
+    this.props.dispatch({ type: actions.ADD_FOOD, payload: newFood });
   }
 
   onChangeName({ target }) {
@@ -106,10 +98,14 @@ export default class Food extends Component {
   }
 
   render() {
-    const { foods, error, success, selectedFoodIndex } = this.state;
+    const { foods } = this.props;
+    const { error, success, selectedFoodIndex } = this.state;
+    // console.log(foodsfoods);
     const calculatedFood =
       foods.length > 0
-        ? this.state.selectedFoodGrams * foods[selectedFoodIndex].calories
+        ? (
+            this.state.selectedFoodGrams * foods[selectedFoodIndex].calories
+          ).toPrecision(2)
         : 0;
     return (
       <Container>
@@ -161,8 +157,8 @@ export default class Food extends Component {
         </Col>
         {foods.length > 0 &&
           foods.map((food, index) => (
-            <Col sm="6" className="mb-3">
-              <Card key={food.index} className="texft-center">
+            <Col key={index} sm="6" className="mb-3">
+              <Card className="texft-center">
                 <div
                   className="my-3"
                   style={{ display: 'flex', justifyContent: 'space-around' }}
@@ -239,3 +235,9 @@ const AddFoodsSection = ({
     </CardBody>
   </Card>
 );
+
+const mapStateToProps = ({ foods }) => {
+  return { foods };
+};
+
+export default connect(mapStateToProps)(Foods);

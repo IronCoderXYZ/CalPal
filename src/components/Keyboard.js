@@ -1,12 +1,11 @@
 import React from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-import { Table } from 'reactstrap';
 
 import './keyboard.css';
 
 const renderRow = (numbers, onChange) => {
   return numbers.map((number, i) => (
-    <td key={i} className={number == null && 'invisible'}>
+    <td key={i} className={number == null ? 'invisible' : ''}>
       <div onClick={() => onChange(number)} className="border-cell">
         {number}
       </div>

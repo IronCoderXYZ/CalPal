@@ -1,23 +1,9 @@
 // NPM Imports
+import { Container } from 'reactstrap';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Card,
-  Alert,
-  Button,
-  CardText,
-  CardBody,
-  CardTitle,
-  Container,
-  CardSubtitle,
-  Table
-} from 'reactstrap';
 // Local Imports
 import './App.css';
 import Add from './components/Add';
-import Foods from './components/Foods';
 import Overview from './components/Overview';
 import UpdateGoals from './components/UpdateGoals';
 
@@ -91,13 +77,14 @@ class App extends Component {
 
   onChangeKeyboard = number => {
     const { input } = this.state;
+    let newInput = input;
     const numberString = String(number);
     if (number === '<')
       return this.setState({ input: this.state.input.slice(0, -1) });
     if (input === 0) {
       return this.setState({ input: numberString });
     }
-    this.setState({ input: (this.state.input += numberString) });
+    this.setState({ input: (newInput += numberString) });
   };
 
   renderContent() {
@@ -126,7 +113,7 @@ class App extends Component {
 
   render() {
     return (
-      <Container className="">
+      <Container>
         <Overview
           {...this.state}
           onClickGoal={this.onClickGoal}

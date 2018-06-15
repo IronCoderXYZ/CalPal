@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Keyboard from './Keyboard';
 import {
   Col,
   Card,
   Input,
+  Button,
   InputGroup,
-  InputGroupAddon,
   InputGroupText,
-  Button
+  InputGroupAddon
 } from 'reactstrap';
 
 export default ({
