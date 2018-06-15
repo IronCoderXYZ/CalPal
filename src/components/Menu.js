@@ -34,13 +34,24 @@ export default class Menu extends Component {
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2 bg-light">
             &#9776;
           </NavbarToggler>
-          <Collapse isOpen={!this.state.collapsed} navbar>
+          <Collapse
+            navbar
+            isOpen={!this.state.collapsed}
+            className="text-center bg-warning"
+          >
             <Nav navbar>
-              <NavItem>
-                <Link to="/">Home</Link>
+              <NavItem className="p-2">
+                <Link to="/" onClick={() => this.setState({ collapsed: true })}>
+                  &#x2764; Home
+                </Link>
               </NavItem>
-              <NavItem>
-                <Link to="/foods">Foods</Link>
+              <NavItem className="p-2">
+                <Link
+                  to="/foods"
+                  onClick={() => this.setState({ collapsed: true })}
+                >
+                  &#9832; Foods
+                </Link>
               </NavItem>
             </Nav>
           </Collapse>
