@@ -1,10 +1,8 @@
-import // FETCH_FOODS,
-// FETCH_FOODS_FAIL,
-// FETCH_FOODS_SUCCESS,
-'../actions';
+import { ADD_USER, ADD_USER_FAIL, ADD_USER_SUCCESS } from '../actions';
 
 const initialState = {
-  user: null,
+  _id: null,
+  email: null,
   error: false,
   loading: false,
   loggedIn: false
@@ -14,5 +12,19 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     default:
       return state;
+    case ADD_USER:
+      return { ...initialState, loading: true };
+    case ADD_USER_FAIL: //Payload in error
+      return {
+        ...initialState,
+        error: 'Error, please check your input and try again'
+      };
+    case ADD_USER_SUCCESS:
+      return {
+        ...initialState,
+        loggedIn: true,
+        _id: payload._id,
+        email: payload.email
+      };
   }
 };

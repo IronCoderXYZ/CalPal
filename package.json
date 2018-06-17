@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://ironcoderxyz.github.io/CalPal",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "font-awesome": "^4.7.0",
     "gh-pages": "^1.1.0",

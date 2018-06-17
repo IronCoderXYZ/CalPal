@@ -1,5 +1,6 @@
 // NPM Imports
-import { put, takeEvery, select } from 'redux-saga/effects';
+import Axios from 'axios';
+import { call, put, takeEvery, select } from 'redux-saga/effects';
 // Local Imports
 import {
   FETCH_FOODS,
@@ -7,8 +8,28 @@ import {
   FETCH_FOODS_FAIL,
   ADD_FOOD,
   ADD_FOOD_FAIL,
-  ADD_FOOD_SUCCESS
+  ADD_FOOD_SUCCESS,
+  // User
+  ADD_USER,
+  ADD_USER_FAIL,
+  ADD_USER_SUCCESS
 } from '../actions';
+
+function addUserToDb(payload) {
+  return Axios.post('http://localhost:3000/users', {
+    email: payload.email,
+    password: payload.password
+  });
+}
+
+function* addUser({ payload }) {
+  try {
+    const request = yield call(addUserToDb, payload);
+    yield put({ type: ADD_USER_SUCCESS, payload: request.data });
+  } catch (error) {
+    yield put({ type: ADD_USER_FAIL, payload: error });
+  }
+}
 
 function* addFood({ payload }) {
   const state = yield select();
@@ -36,6 +57,7 @@ function* fetchFoods(action) {
 function* rootSaga() {
   yield takeEvery(FETCH_FOODS, fetchFoods);
   yield takeEvery(ADD_FOOD, addFood);
+  yield takeEvery(ADD_USER, addUser);
 }
 
 export default rootSaga;

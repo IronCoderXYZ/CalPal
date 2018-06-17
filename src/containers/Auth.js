@@ -1,8 +1,10 @@
 // NPM Imports
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Col, Container, Card, Button } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
+import { Alert, Col, Container, Card, Button } from 'reactstrap';
 // Local Imports
+import * as actions from '../actions';
 import Signin from '../components/signin';
 import Signup from '../components/signup';
 
@@ -10,7 +12,15 @@ class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = { showSignup: false };
+    this.onSignup = this.onSignup.bind(this);
     this.toggleSignup = this.toggleSignup.bind(this);
+  }
+
+  onSignup(email, password) {
+    this.props.dispatch({
+      type: actions.ADD_USER,
+      payload: { email, password }
+    });
   }
 
   toggleSignup() {
@@ -18,13 +28,20 @@ class Auth extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props;
     const { showSignup } = this.state;
+    if (loggedIn) this.props.history.push('/');
     return (
       <Container>
         <Col sm="6 mx-auto">
           <Card className="text-dark">
-            <h4 className="text-center my-4">CalPal Sign In</h4>
-            {showSignup ? <Signup /> : <Signin />}
+            <h4 className="text-center my-4">
+              CalPal {showSignup ? 'Sign Up' : 'Sign In'}
+            </h4>
+            <Alert className="mx-3" color="danger" isOpen={this.props.error}>
+              {this.props.error}
+            </Alert>
+            {showSignup ? <Signup onSubmit={this.onSignup} /> : <Signin />}
           </Card>
           <div className="text-center mt-3">
             <Button color="secondary" onClick={this.toggleSignup}>
@@ -38,7 +55,7 @@ class Auth extends Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  return { loggedIn: auth.loggedIn };
+  return { loggedIn: auth.loggedIn, error: auth.error };
 };
 
-export default connect(mapStateToProps)(Auth);
+export default withRouter(connect(mapStateToProps)(Auth));
