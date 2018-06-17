@@ -236,8 +236,8 @@ const AddFoodsSection = ({
   </Card>
 );
 
-const mapStateToProps = ({ foods }) => {
-  return { foods };
+const mapStateToProps = state => {
+  return { foods: state.food.items };
 };
 
 export default connect(mapStateToProps)(Foods);

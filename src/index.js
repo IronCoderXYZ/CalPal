@@ -7,11 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Local Imports
-import App from './App';
+import './index.css';
 import rootSaga from './sagas';
+import App from './containers/App';
+import Auth from './containers/Auth';
 import Menu from './components/Menu';
 import foodReducer from './reducers';
-import Foods from './components/Foods';
+import Foods from './containers/Foods';
+import requireAuth from './components/requireAuth';
 import registerServiceWorker from './registerServiceWorker';
 
 if (module.hot) {
@@ -27,8 +30,9 @@ ReactDOM.render(
     <Router>
       <Fragment>
         <Menu />
-        <Route exact path="/" component={App} />
-        <Route path="/foods" component={Foods} />
+        <Route exact path="/" component={requireAuth(App)} />
+        <Route path="/foods" component={requireAuth(Foods)} />
+        <Route path="/auth" component={Auth} />
       </Fragment>
     </Router>
   </Provider>,
