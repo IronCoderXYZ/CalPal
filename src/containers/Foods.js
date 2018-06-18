@@ -58,11 +58,8 @@ class Foods extends Component {
     });
   }
 
-  onDelete(index) {
-    // const newFoods = this.state.foods;
-    // newFoods.splice(index, 1);
-    // this.setState({ foods: newFoods });
-    // localStorage.setItem('foods', newFoods);
+  onDelete(_id) {
+    this.props.dispatch({ type: actions.DELETE_FOOD, payload: _id });
   }
 
   onSave() {
@@ -156,7 +153,7 @@ class Foods extends Component {
         </Col>
         {foods.length > 0 &&
           foods.map((food, index) => (
-            <Col key={index} sm="6" className="mb-3">
+            <Col key={food._id} sm="6" className="mb-3">
               <Card className="texft-center">
                 <div
                   className="my-3"
@@ -181,7 +178,7 @@ class Foods extends Component {
                     outline
                     color="danger"
                     className="mx-4"
-                    onClick={() => this.onDelete(index)}
+                    onClick={() => this.onDelete(food._id)}
                   >
                     Delete
                   </Button>

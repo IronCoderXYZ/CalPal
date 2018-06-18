@@ -3,11 +3,16 @@ import Axios from 'axios';
 import { call, put, select } from 'redux-saga/effects';
 // Local Imports
 import {
+  FETCH_FOODS,
   FETCH_FOODS_SUCCESS,
   FETCH_FOODS_FAIL,
   ADD_FOOD_FAIL,
   ADD_FOOD_SUCCESS
 } from '../actions';
+
+function deleteFoodFromDb(_id) {
+  return Axios.delete(`http://localhost:3000/foods/${_id}`);
+}
 
 function addFoodToDb(payload, _id) {
   return Axios.post('http://localhost:3000/foods', {
@@ -19,6 +24,15 @@ function addFoodToDb(payload, _id) {
 
 function fetchFoodsFromDb(_id) {
   return Axios.get(`http://localhost:3000/foods/${_id}`);
+}
+
+export function* deleteFood({ payload }) {
+  try {
+    const request = yield call(deleteFoodFromDb, payload);
+    yield put({ type: FETCH_FOODS });
+  } catch (error) {
+    yield put({ type: FETCH_FOODS_FAIL, payload: error });
+  }
 }
 
 export function* addFood({ payload }) {
