@@ -1,5 +1,6 @@
 // NPM Imports
-import { put } from 'redux-saga/effects';
+import Axios from 'axios';
+import { call, put, select } from 'redux-saga/effects';
 // Local Imports
 import {
   FETCH_FOODS_SUCCESS,
@@ -8,15 +9,20 @@ import {
   ADD_FOOD_SUCCESS
 } from '../actions';
 
-export function* addFood({ payload }) {
-  // const state = yield select();
-  // const { foods } = state;
-  try {
-    // yield localStorage.setItem('foods', JSON.stringify([...foods, payload]));
-    // yield put({ type: FETCH_FOODS });
+function addFoodToDb(payload, _id) {
+  return Axios.post('http://localhost:3000/foods', {
+    author: _id,
+    name: payload.name,
+    calories: payload.calories
+  });
+}
 
-    // Temporary
-    yield put({ type: ADD_FOOD_SUCCESS, payload });
+export function* addFood({ payload }) {
+  try {
+    const state = yield select();
+    const { _id } = state.auth;
+    const request = yield call(addFoodToDb, payload, _id);
+    yield put({ type: ADD_FOOD_SUCCESS, payload: request.data });
   } catch (error) {
     yield put({ type: ADD_FOOD_FAIL, payload: error });
   }

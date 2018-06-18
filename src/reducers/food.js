@@ -35,7 +35,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         error: null,
         loading: false,
-        foods: [...state.foods, payload]
+        items: [...state.items, payload]
       };
   }
 };
