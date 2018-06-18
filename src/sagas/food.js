@@ -17,6 +17,10 @@ function addFoodToDb(payload, _id) {
   });
 }
 
+function fetchFoodsFromDb(_id) {
+  return Axios.get(`http://localhost:3000/foods/${_id}`);
+}
+
 export function* addFood({ payload }) {
   try {
     const state = yield select();
@@ -30,8 +34,10 @@ export function* addFood({ payload }) {
 
 export function* fetchFoods(action) {
   try {
-    // const foods = yield JSON.parse(localStorage.getItem('foods'));
-    yield put({ type: FETCH_FOODS_SUCCESS });
+    const state = yield select();
+    const { _id } = state.auth;
+    const request = yield call(fetchFoodsFromDb, _id);
+    yield put({ type: FETCH_FOODS_SUCCESS, payload: request.data });
   } catch (error) {
     yield put({ type: FETCH_FOODS_FAIL, payload: error });
   }

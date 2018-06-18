@@ -27,8 +27,8 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: null,
-        loading: false
-        // foods:
+        loading: false,
+        items: payload
       };
     case ADD_FOOD_SUCCESS:
       return {
