@@ -10,5 +10,9 @@ export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS';
 export const ADD_USER = 'ADD_USER';
 export const ADD_USER_FAIL = 'ADD_USER_FAIL';
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS';
+// Sigin User
+export const SIGNIN_USER = 'SIGNIN_USER';
+export const SIGNIN_USER_FAIL = 'SIGNIN_USER_FAIL';
+export const SIGNIN_USER_SUCCESS = 'SIGNIN_USER_SUCCESS';
 
 export const fetchFoods = () => {};

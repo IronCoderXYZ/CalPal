@@ -12,8 +12,16 @@ class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = { showSignup: false };
+    this.onSignin = this.onSignin.bind(this);
     this.onSignup = this.onSignup.bind(this);
     this.toggleSignup = this.toggleSignup.bind(this);
+  }
+
+  onSignin(email, password) {
+    this.props.dispatch({
+      type: actions.SIGNIN_USER,
+      payload: { email, password }
+    });
   }
 
   onSignup(email, password) {
@@ -41,7 +49,11 @@ class Auth extends Component {
             <Alert className="mx-3" color="danger" isOpen={this.props.error}>
               {this.props.error}
             </Alert>
-            {showSignup ? <Signup onSubmit={this.onSignup} /> : <Signin />}
+            {showSignup ? (
+              <Signup onSubmit={this.onSignup} />
+            ) : (
+              <Signin onSubmit={this.onSignin} />
+            )}
           </Card>
           <div className="text-center mt-3">
             <Button color="secondary" onClick={this.toggleSignup}>

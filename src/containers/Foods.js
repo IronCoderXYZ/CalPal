@@ -66,7 +66,7 @@ class Foods extends Component {
   }
 
   onSave() {
-    const { foods } = this.props;
+    // const { foods } = this.props;
     const { newFoodName, newFoodCalories } = this.state;
     if (!newFoodName || !newFoodCalories) {
       return this.setState({ error: true, success: false });

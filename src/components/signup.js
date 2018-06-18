@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Alert, Card, Input, Button, FormGroup, Label } from 'reactstrap';
+import { Alert, Input, Button, FormGroup, Label } from 'reactstrap';
 
 export default class Signup extends Component {
   constructor(props) {
@@ -46,7 +46,6 @@ export default class Signup extends Component {
 
   render() {
     const { email, password, confirmPassword, error } = this.state;
-
     return (
       <Fragment>
         <FormGroup className="px-5 my-2">
@@ -72,7 +71,7 @@ export default class Signup extends Component {
         <Alert
           className="mt-3 mb-0 mx-3"
           color="danger"
-          isOpen={error}
+          isOpen={Boolean(error)}
           toggle={this.dismissError}
         >
           {this.state.error}

@@ -2,8 +2,8 @@ import React from 'react';
 import { Col, Card } from 'reactstrap';
 
 export default ({ viewIndex, consumed, goal, onClickGoal, onClickFoods }) => (
-  <Col sm="12" className="">
-    <Card className="text-dark text-center my-3">
+  <Col sm="12">
+    <Card className="text-dark text-center my-3 pt-3">
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div onClick={onClickGoal}>
           <p className="overview-subtitle">Target Goal:</p>
