@@ -2,9 +2,9 @@
 import { Container } from 'reactstrap';
 import React, { Component } from 'react';
 // Local Imports
-import Add from '../components/Add';
-import Overview from '../components/Overview';
-import UpdateGoals from '../components/UpdateGoals';
+import Add from '../components/add';
+import Overview from '../components/overview';
+import UpdateGoals from '../components/updateGoals';
 
 class App extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Keyboard from './Keyboard';
+import Keyboard from './keyboard';
 import {
   Col,
   Card,
@@ -27,7 +27,6 @@ export default ({
         <Input disabled type="number" value={input} onChange={onInputChange} />
       </InputGroup>
       <Keyboard onChange={number => onChangeKeyboard(number)} />
-
       <div
         className="my-3"
         style={{ display: 'flex', justifyContent: 'space-between' }}
