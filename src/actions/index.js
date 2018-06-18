@@ -8,6 +8,8 @@ export const ADD_FOOD_FAIL = 'ADD_FOOD_FAIL';
 export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS';
 // Delete Food
 export const DELETE_FOOD = 'DELETE_FOOD';
+// Update Food
+export const UPDATE_FOOD = 'UPDATE_FOOD';
 // Add User
 export const ADD_USER = 'ADD_USER';
 export const ADD_USER_FAIL = 'ADD_USER_FAIL';

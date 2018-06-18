@@ -10,6 +10,13 @@ import {
   ADD_FOOD_SUCCESS
 } from '../actions';
 
+// function updateFoodFromDb(payload, _id) {
+//   return Axios.update(`http://localhost:3000/foods/${_id}`, {
+//     name: payload.name,
+//     calories: payload.calories
+//   });
+// }
+
 function deleteFoodFromDb(_id) {
   return Axios.delete(`http://localhost:3000/foods/${_id}`);
 }
@@ -25,6 +32,15 @@ function addFoodToDb(payload, _id) {
 function fetchFoodsFromDb(_id) {
   return Axios.get(`http://localhost:3000/foods/${_id}`);
 }
+
+// export function* updateFood({ payload }) {
+//   try {
+//     const request = yield call(updateFoodFromDb, payload);
+//     yield put({ type: FETCH_FOODS });
+//   } catch (error) {
+//     yield put({ type: FETCH_FOODS_FAIL, payload: error });
+//   }
+// }
 
 export function* deleteFood({ payload }) {
   try {
