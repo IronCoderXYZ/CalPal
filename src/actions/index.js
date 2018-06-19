@@ -10,6 +10,12 @@ export const ADD_FOOD_SUCCESS = 'ADD_FOOD_SUCCESS';
 export const DELETE_FOOD = 'DELETE_FOOD';
 // Update Food
 export const UPDATE_FOOD = 'UPDATE_FOOD';
+export const UPDATE_FOOD_FAIL = 'UPDATE_FOOD_FAIL';
+export const UPDATE_FOOD_SUCCESS = 'UPDATE_FOOD_SUCCESS';
+// Update Calories
+export const UPDATE_CALORIES = 'UPDATE_CALORIES';
+export const UPDATE_CALORIES_FAIL = 'UPDATE_CALORIES_FAIL';
+export const UPDATE_CALORIES_SUCCESS = 'UPDATE_CALORIES_SUCCESS';
 // Add User
 export const ADD_USER = 'ADD_USER';
 export const ADD_USER_FAIL = 'ADD_USER_FAIL';

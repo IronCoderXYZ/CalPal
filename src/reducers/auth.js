@@ -4,15 +4,20 @@ import {
   ADD_USER_SUCCESS,
   SIGNIN_USER,
   SIGNIN_USER_FAIL,
-  SIGNIN_USER_SUCCESS
+  SIGNIN_USER_SUCCESS,
+  UPDATE_CALORIES,
+  UPDATE_CALORIES_FAIL,
+  UPDATE_CALORIES_SUCCESS
 } from '../actions';
 
 const initialState = {
   _id: null,
   email: null,
+  token: null,
   error: false,
   loading: false,
-  loggedIn: false
+  loggedIn: false,
+  consumedCalories: 0
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -30,8 +35,10 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...initialState,
         loggedIn: true,
-        _id: payload._id,
-        email: payload.email
+        token: payload.token,
+        _id: payload.user._id,
+        email: payload.user.email,
+        consumedCalories: payload.user.consumedCalories
       };
     case SIGNIN_USER:
       return {
@@ -47,8 +54,26 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...initialState,
         loggedIn: true,
-        _id: payload._id,
-        email: payload.email
+        token: payload.token,
+        _id: payload.user._id,
+        email: payload.user.email,
+        consumedCalories: payload.user.consumedCalories
+      };
+    case UPDATE_CALORIES:
+      return {
+        ...state,
+        loading: true
+      };
+    case UPDATE_CALORIES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error, please try again'
+      };
+    case UPDATE_CALORIES_SUCCESS:
+      return {
+        ...state,
+        consumedCalories: payload.consumedCalories
       };
   }
 };

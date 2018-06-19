@@ -96,7 +96,6 @@ class Foods extends Component {
   render() {
     const { foods } = this.props;
     const { error, success, selectedFoodIndex } = this.state;
-    // console.log(foodsfoods);
     const calculatedFood =
       foods.length > 0
         ? (
@@ -153,7 +152,7 @@ class Foods extends Component {
         </Col>
         {foods.length > 0 &&
           foods.map((food, index) => (
-            <Col key={food._id} sm="6" className="mb-3">
+            <Col key={index} sm="6" className="mb-3">
               <Card className="texft-center">
                 <div
                   className="my-3"

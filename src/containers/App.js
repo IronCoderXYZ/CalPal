@@ -1,7 +1,9 @@
 // NPM Imports
+import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import React, { Component } from 'react';
 // Local Imports
+import * as actions from '../actions';
 import Add from '../components/add';
 import Overview from '../components/overview';
 import UpdateGoals from '../components/updateGoals';
@@ -13,7 +15,6 @@ class App extends Component {
       input: 0,
       goal: 2250,
       newGoal: 0,
-      consumed: 0,
       showUpdateGoal: false
     };
     this.addCalories = this.addCalories.bind(this);
@@ -28,12 +29,8 @@ class App extends Component {
 
   componentWillMount() {
     const goal = localStorage.getItem('goal');
-    const lastSessionConsumed = localStorage.getItem('lastConsumed');
     if (goal) {
       this.setState({ goal });
-    }
-    if (lastSessionConsumed) {
-      this.setState({ consumed: Number(lastSessionConsumed) });
     }
   }
 
@@ -61,17 +58,23 @@ class App extends Component {
   }
 
   subtractCalories(calories) {
-    const { consumed } = this.state;
-    let totalCalories = consumed - calories;
-    this.setState({ input: 0, consumed: totalCalories });
-    localStorage.setItem('lastConsumed', totalCalories);
+    const { consumedCalories } = this.props.user;
+    let newCalories = consumedCalories - calories;
+    this.props.dispatch({
+      type: actions.UPDATE_CALORIES,
+      payload: newCalories
+    });
+    this.setState({ input: 0 });
   }
 
   addCalories(calories) {
-    const { consumed } = this.state;
-    let totalCalories = (calories += consumed);
-    this.setState({ input: 0, consumed: totalCalories });
-    localStorage.setItem('lastConsumed', totalCalories);
+    const { consumedCalories } = this.props.user;
+    let newCalories = consumedCalories + calories;
+    this.props.dispatch({
+      type: actions.UPDATE_CALORIES,
+      payload: newCalories
+    });
+    this.setState({ input: 0 });
   }
 
   onChangeKeyboard = number => {
@@ -114,9 +117,9 @@ class App extends Component {
     return (
       <Container>
         <Overview
-          {...this.state}
           onClickGoal={this.onClickGoal}
           onClickFoods={this.onClickFoods}
+          consumed={this.props.user.consumedCalories}
         />
         {this.renderContent()}
       </Container>
@@ -124,4 +127,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { user: state.auth };
+};
+
+export default connect(mapStateToProps)(App);
