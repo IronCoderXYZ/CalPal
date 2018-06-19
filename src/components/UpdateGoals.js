@@ -9,7 +9,7 @@ import {
   InputGroupAddon
 } from 'reactstrap';
 
-export default ({ newGoal, onInputChange, onSave, onCancel }) => (
+export default ({ goal, onInputChange, onSave, onCancel }) => (
   <Col>
     <Card className="px-5 text-dark text-center">
       <p className="my-3">Update Goals</p>
@@ -17,7 +17,7 @@ export default ({ newGoal, onInputChange, onSave, onCancel }) => (
         <InputGroupAddon addonType="prepend">
           <InputGroupText>New Goal:</InputGroupText>
         </InputGroupAddon>
-        <Input type="number" value={newGoal} onChange={onInputChange} />
+        <Input type="number" value={goal} onChange={onInputChange} />
       </InputGroup>
       <div
         className="mt-4 mb-3"

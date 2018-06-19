@@ -12,6 +12,10 @@ export const DELETE_FOOD = 'DELETE_FOOD';
 export const UPDATE_FOOD = 'UPDATE_FOOD';
 export const UPDATE_FOOD_FAIL = 'UPDATE_FOOD_FAIL';
 export const UPDATE_FOOD_SUCCESS = 'UPDATE_FOOD_SUCCESS';
+// Update Goal
+export const UPDATE_GOAL = 'UPDATE_GOAL';
+export const UPDATE_GOAL_FAIL = 'UPDATE_GOAL_FAIL';
+export const UPDATE_GOAL_SUCCESS = 'UPDATE_GOAL_SUCCESS';
 // Update Calories
 export const UPDATE_CALORIES = 'UPDATE_CALORIES';
 export const UPDATE_CALORIES_FAIL = 'UPDATE_CALORIES_FAIL';

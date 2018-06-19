@@ -7,7 +7,10 @@ import {
   SIGNIN_USER_SUCCESS,
   UPDATE_CALORIES,
   UPDATE_CALORIES_FAIL,
-  UPDATE_CALORIES_SUCCESS
+  UPDATE_CALORIES_SUCCESS,
+  UPDATE_GOAL,
+  UPDATE_GOAL_FAIL,
+  UPDATE_GOAL_SUCCESS
 } from '../actions';
 
 const initialState = {
@@ -16,6 +19,7 @@ const initialState = {
   token: null,
   error: false,
   loading: false,
+  calorieGoal: 0,
   loggedIn: false,
   consumedCalories: 0
 };
@@ -38,6 +42,7 @@ export default (state = initialState, { type, payload }) => {
         token: payload.token,
         _id: payload.user._id,
         email: payload.user.email,
+        calorieGoal: payload.user.calorieGoal,
         consumedCalories: payload.user.consumedCalories
       };
     case SIGNIN_USER:
@@ -57,13 +62,16 @@ export default (state = initialState, { type, payload }) => {
         token: payload.token,
         _id: payload.user._id,
         email: payload.user.email,
+        calorieGoal: payload.user.calorieGoal,
         consumedCalories: payload.user.consumedCalories
       };
+    case UPDATE_GOAL:
     case UPDATE_CALORIES:
       return {
         ...state,
         loading: true
       };
+    case UPDATE_GOAL_FAIL:
     case UPDATE_CALORIES_FAIL:
       return {
         ...state,
@@ -74,6 +82,11 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         consumedCalories: payload.consumedCalories
+      };
+    case UPDATE_GOAL_SUCCESS:
+      return {
+        ...state,
+        calorieGoal: payload.calorieGoal
       };
   }
 };

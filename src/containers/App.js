@@ -13,7 +13,6 @@ class App extends Component {
     super(props);
     this.state = {
       input: 0,
-      goal: 2250,
       newGoal: 0,
       showUpdateGoal: false
     };
@@ -28,10 +27,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const goal = localStorage.getItem('goal');
-    if (goal) {
-      this.setState({ goal });
-    }
+    this.setState({ newGoal: this.props.user.calorieGoal });
   }
 
   onGoalsCancel() {
@@ -39,8 +35,13 @@ class App extends Component {
   }
 
   onGoalsSave() {
-    this.setState({ goal: this.state.newGoal, showUpdateGoal: false });
-    localStorage.setItem('goal', this.state.newGoal);
+    this.props.dispatch({
+      type: actions.UPDATE_GOAL,
+      payload: this.state.newGoal
+    });
+    this.setState({
+      showUpdateGoal: false
+    });
   }
 
   onGoalsUpdate({ target }) {
@@ -104,9 +105,9 @@ class App extends Component {
       case true:
         return (
           <UpdateGoals
-            {...this.state}
             onSave={this.onGoalsSave}
             onCancel={this.onGoalsCancel}
+            goal={this.state.newGoal}
             onInputChange={this.onGoalsUpdate}
           />
         );
@@ -119,6 +120,7 @@ class App extends Component {
         <Overview
           onClickGoal={this.onClickGoal}
           onClickFoods={this.onClickFoods}
+          goal={this.props.user.calorieGoal}
           consumed={this.props.user.consumedCalories}
         />
         {this.renderContent()}
