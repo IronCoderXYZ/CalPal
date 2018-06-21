@@ -40,7 +40,7 @@ export default class Signin extends Component {
   }
 
   render() {
-    const { email, password, confirmPassword, error } = this.state;
+    const { email, password, error } = this.state;
     return (
       <Fragment>
         <FormGroup className="px-5 my-2">

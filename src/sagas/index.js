@@ -1,7 +1,7 @@
 // NPM Imports
 import { takeEvery } from 'redux-saga/effects';
 // Local Imports
-import { addFood, fetchFoods, deleteFood, updateFood } from './food';
+import { addFood, fetchFoods, deleteFood } from './food';
 import { addUser, signinUser, updateCalories, updateGoal } from './user';
 import {
   FETCH_FOODS,

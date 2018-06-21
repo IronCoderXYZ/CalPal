@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 import createSagaMiddleware from 'redux-saga';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore, applyMiddleware } from 'redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 // Local Imports
 import './index.css';
 import rootSaga from './sagas';

@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import {
   Col,
   Card,
-  Alert,
   Input,
   Modal,
+  Alert,
   Button,
   CardBody,
   Container,
@@ -15,6 +15,7 @@ import {
   InputGroup,
   ModalFooter,
   ModalHeader,
+  CardSubtitle,
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
@@ -40,10 +41,23 @@ class Foods extends Component {
     this.toggleFoodModal = this.toggleFoodModal.bind(this);
     this.onChangeCalories = this.onChangeCalories.bind(this);
     this.onChangeGramsFood = this.onChangeGramsFood.bind(this);
+    this.onSubmitSelectedFood = this.onSubmitSelectedFood.bind(this);
   }
 
   componentWillMount() {
     this.props.dispatch({ type: actions.FETCH_FOODS });
+  }
+
+  onSubmitSelectedFood() {
+    const { foods, consumedCalories } = this.props;
+    const { selectedFoodGrams, selectedFoodIndex } = this.state;
+    const newCalories = selectedFoodGrams * foods[selectedFoodIndex].calories;
+    const totalCalories = newCalories + consumedCalories;
+    this.props.dispatch({
+      type: actions.UPDATE_CALORIES,
+      payload: totalCalories
+    });
+    this.toggleFoodModal(0);
   }
 
   onChangeGramsFood({ target }) {
@@ -98,9 +112,7 @@ class Foods extends Component {
     const { error, success, selectedFoodIndex } = this.state;
     const calculatedFood =
       foods.length > 0
-        ? (
-            this.state.selectedFoodGrams * foods[selectedFoodIndex].calories
-          ).toPrecision(2)
+        ? this.state.selectedFoodGrams * foods[selectedFoodIndex].calories
         : 0;
     return (
       <Container>
@@ -110,6 +122,7 @@ class Foods extends Component {
             onSave={this.onSave}
             onChangeName={this.onChangeName}
             onChangeCalories={this.onChangeCalories}
+            consumedCalories={this.props.consumedCalories}
           />
         </Col>
         <Modal
@@ -137,7 +150,7 @@ class Foods extends Component {
             <Button color="secondary" onClick={() => this.toggleFoodModal(0)}>
               Cancel
             </Button>
-            <Button color="primary" onClick={this.toggleFoodModal}>
+            <Button color="primary" onClick={this.onSubmitSelectedFood}>
               Save
             </Button>
           </ModalFooter>
@@ -201,6 +214,7 @@ class Foods extends Component {
 const AddFoodsSection = ({
   newFoodName,
   newFoodCalories,
+  consumedCalories,
   onSave,
   onChangeName,
   onChangeCalories
@@ -208,6 +222,9 @@ const AddFoodsSection = ({
   <Card className="text-center mb-3">
     <CardBody>
       <CardTitle className="text-dark">Add Food</CardTitle>
+      <CardSubtitle className="text-dark my-2">
+        Consumed: {consumedCalories}
+      </CardSubtitle>
       <input
         className="mt-1 mb-1"
         type="string"
@@ -232,7 +249,10 @@ const AddFoodsSection = ({
 );
 
 const mapStateToProps = state => {
-  return { foods: state.food.items };
+  return {
+    foods: state.food.items,
+    consumedCalories: state.auth.consumedCalories
+  };
 };
 
 export default connect(mapStateToProps)(Foods);

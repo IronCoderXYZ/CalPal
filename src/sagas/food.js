@@ -44,7 +44,7 @@ function fetchFoodsFromDb(_id) {
 
 export function* deleteFood({ payload }) {
   try {
-    const request = yield call(deleteFoodFromDb, payload);
+    yield call(deleteFoodFromDb, payload);
     yield put({ type: FETCH_FOODS });
   } catch (error) {
     yield put({ type: FETCH_FOODS_FAIL, payload: error });
