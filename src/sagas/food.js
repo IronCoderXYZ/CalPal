@@ -18,11 +18,11 @@ import {
 // }
 
 function deleteFoodFromDb(_id) {
-  return Axios.delete(`http://localhost:3000/foods/${_id}`);
+  return Axios.delete(`https://calpal-1992.herokuapp.com/foods/${_id}`);
 }
 
 function addFoodToDb(payload, _id) {
-  return Axios.post('http://localhost:3000/foods', {
+  return Axios.post('https://calpal-1992.herokuapp.com/foods', {
     author: _id,
     name: payload.name,
     calories: payload.calories
@@ -30,7 +30,7 @@ function addFoodToDb(payload, _id) {
 }
 
 function fetchFoodsFromDb(_id) {
-  return Axios.get(`http://localhost:3000/foods/${_id}`);
+  return Axios.get(`https://calpal-1992.herokuapp.com/foods/${_id}`);
 }
 
 // export function* updateFood({ payload }) {

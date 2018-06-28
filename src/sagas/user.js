@@ -18,7 +18,7 @@ function updateGoalDb(payload, _id, token) {
     method: 'POST',
     headers: { 'x-auth': token },
     data: { _id, goal: payload },
-    url: 'http://localhost:3000/users/me/goal'
+    url: 'https://calpal-1992.herokuapp.com/users/me/goal'
   });
 }
 
@@ -41,7 +41,7 @@ function updateCaloriesDb(payload, _id, token) {
     method: 'POST',
     headers: { 'x-auth': token },
     data: { _id, calories: payload },
-    url: 'http://localhost:3000/users/me/consumed'
+    url: 'https://calpal-1992.herokuapp.com/users/me/consumed'
   });
 }
 
@@ -61,7 +61,7 @@ export function* updateCalories({ payload }) {
 }
 
 function signinUserDb({ payload }) {
-  return Axios.post('http://localhost:3000/users/login', {
+  return Axios.post('https://calpal-1992.herokuapp.com/users/login', {
     email: payload.email,
     password: payload.password
   });
@@ -77,7 +77,7 @@ export function* signinUser(payload) {
 }
 
 function addUserToDb(payload) {
-  return Axios.post('http://localhost:3000/users', {
+  return Axios.post('https://calpal-1992.herokuapp.com/users', {
     email: payload.email,
     password: payload.password
   });
