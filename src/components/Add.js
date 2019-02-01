@@ -120,7 +120,7 @@ const Button = styled.span`
 `;
 
 const Container = styled.div`
-  height: calc(100vh - 80px);
+  height: calc(100vh - 100px);
   display: grid;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 15px;
