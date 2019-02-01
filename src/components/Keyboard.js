@@ -15,8 +15,8 @@ const renderRow = (numbers, onChange) => {
 
 const Keyboard = ({ onChange }) => {
   return (
-    <table>
-      <tbody>
+    <table style={{ height: '100%' }}>
+      <tbody style={{ height: '100%', background: 'red', width: '100%' }}>
         <tr>{renderRow([7, 8, 9], onChange)}</tr>
         <tr>{renderRow([4, 5, 6], onChange)}</tr>
         <tr>{renderRow([1, 2, 3], onChange)}</tr>

@@ -31,7 +31,7 @@ export default class Menu extends Component {
             <img alt="logo" src={Logo} height="30px" />
             CalPal
           </NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2 bg-light">
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2">
             &#9776;
           </NavbarToggler>
           <Collapse

@@ -11,7 +11,7 @@ import './index.css';
 import rootSaga from './sagas';
 import App from './containers/App';
 import Auth from './containers/Auth';
-import Menu from './components/menu';
+import Menu from './components/Menu';
 import foodReducer from './reducers';
 import Foods from './containers/Foods';
 import requireAuth from './components/requireAuth';

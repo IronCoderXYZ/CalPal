@@ -4,9 +4,9 @@ import { Container } from 'reactstrap';
 import React, { Component } from 'react';
 // Local Imports
 import * as actions from '../actions';
-import Add from '../components/add';
-import Overview from '../components/overview';
-import UpdateGoals from '../components/updateGoals';
+import Add from '../components/Add';
+import Overview from '../components/Overview';
+import UpdateGoals from '../components/UpdateGoals';
 
 class App extends Component {
   constructor(props) {
@@ -19,11 +19,9 @@ class App extends Component {
     this.addCalories = this.addCalories.bind(this);
     this.onClickGoal = this.onClickGoal.bind(this);
     this.onGoalsSave = this.onGoalsSave.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
     this.onGoalsUpdate = this.onGoalsUpdate.bind(this);
     this.onGoalsCancel = this.onGoalsCancel.bind(this);
     this.subtractCalories = this.subtractCalories.bind(this);
-    this.onChangeKeyboard = this.onChangeKeyboard.bind(this);
   }
 
   componentWillMount() {
@@ -54,10 +52,6 @@ class App extends Component {
     });
   }
 
-  onInputChange({ target }) {
-    this.setState({ input: target.value });
-  }
-
   subtractCalories(calories) {
     const { consumedCalories } = this.props.user;
     let newCalories = consumedCalories - calories;
@@ -78,18 +72,6 @@ class App extends Component {
     this.setState({ input: 0 });
   }
 
-  onChangeKeyboard = number => {
-    const { input } = this.state;
-    let newInput = input;
-    const numberString = String(number);
-    if (number === '<')
-      return this.setState({ input: this.state.input.slice(0, -1) });
-    if (input === 0) {
-      return this.setState({ input: numberString });
-    }
-    this.setState({ input: (newInput += numberString) });
-  };
-
   renderContent() {
     switch (this.state.showUpdateGoal) {
       default:
@@ -97,9 +79,7 @@ class App extends Component {
           <Add
             {...this.state}
             addCalories={this.addCalories}
-            onInputChange={this.onInputChange}
             subtractCalories={this.subtractCalories}
-            onChangeKeyboard={this.onChangeKeyboard}
           />
         );
       case true:

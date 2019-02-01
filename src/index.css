@@ -1,7 +1,22 @@
+html,
 body {
   /* padding: 50px; */
   /* color: #2980b9; */
-  background: #2c3e50;
+  background: linear-gradient(
+    to bottom,
+    rgba(45, 48, 47, 1) 0%,
+    rgba(18, 19, 20, 1) 100%
+  );
+  font-family: 'Orbitron', 'Times New Roman', Times, serif;
+  font-weight: 400;
+  height: 100%;
+  margin: 0;
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   /* padding-top: 10px; */
   /* text-align: center; */
+}
+* {
+  color: rgb(181, 182, 181);
 }
