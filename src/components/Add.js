@@ -56,11 +56,8 @@ export default class Add extends React.Component {
 }
 
 const Undo = styled.span`
-  position: absolute;
-  top: 110px;
-  right: 0;
+  float: right;
   color: white;
-  width: 50px;
 `;
 
 const Banner = styled.section`
@@ -75,11 +72,13 @@ const Banner = styled.section`
 
 const Currently = styled.section`
   flex-grow: 1;
+  flex-basis: 1;
   display: flex;
 `;
 
 const NumDisplay = styled.section`
   flex-grow: 1;
+  flex-basis: 1;
   font-size: 1.5rem;
   display: flex;
   justify-content: center;
