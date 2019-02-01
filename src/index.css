@@ -11,9 +11,11 @@ body {
   font-weight: 400;
   height: 100%;
   margin: 0;
-
+  padding: 0;
+  position: relative;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-y: none;
   /* padding-top: 10px; */
   /* text-align: center; */
 }

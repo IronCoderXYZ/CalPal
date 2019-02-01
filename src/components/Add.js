@@ -57,7 +57,8 @@ export default class Add extends React.Component {
 
 const Undo = styled.span`
   position: absolute;
-  right: 30px;
+  top: 110px;
+  right: 0;
   color: white;
   width: 50px;
 `;
@@ -107,8 +108,8 @@ const Button = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
   margin: auto;
   background: linear-gradient(
     to bottom,
@@ -120,7 +121,11 @@ const Button = styled.span`
 `;
 
 const Container = styled.div`
-  height: calc(100vh - 100px);
+  position: absolute;
+  top: 70px;
+  bottom: 30px;
+  left: 20px;
+  right: 20px;
   display: grid;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 15px;
