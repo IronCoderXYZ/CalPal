@@ -1,10 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const View = {
+  Saved: 0,
+  Manual: 1
+};
+
 export default class Add extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { input: '0' };
+    this.toggleView = this.toggleView.bind(this);
+    this.state = { input: '0', view: View.Manual };
+  }
+
+  toggleView() {
+    const { view } = this.state;
+
+    switch (view) {
+      case View.Saved:
+        return this.setState({ view: View.Manual });
+      case View.Manual:
+        return this.setState({ view: View.Saved });
+    }
   }
 
   onClick(val) {
@@ -31,15 +48,18 @@ export default class Add extends React.Component {
   }
 
   render() {
+    const { view } = this.state;
+    const { goal, consumed } = this.props;
+    console.log(view);
     return (
       <Container>
         <Top>
           <Currently>
             <Banner>
-              Goal: <br /> 3500 kCal
+              Goal: <br /> {goal} kCal
             </Banner>
             <Banner>
-              Consumed: <br /> 1500 kCal
+              Consumed: <br /> {consumed} kCal
             </Banner>
           </Currently>
           <NumDisplay>
@@ -47,16 +67,49 @@ export default class Add extends React.Component {
             <Undo onClick={this.onClick.bind(this, '<')}>{'<'}</Undo>
           </NumDisplay>
         </Top>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '+'].map(num => {
-          return <Button onClick={this.onClick.bind(this, num)}>{num}</Button>;
-        })}
+        {view === View.Manual ? (
+          <React.Fragment>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '+'].map(num => {
+              return (
+                <Button onClick={this.onClick.bind(this, num)}>{num}</Button>
+              );
+            })}
+          </React.Fragment>
+        ) : (
+          <h1>hi</h1>
+        )}
+        <Bottom>
+          <BottomButton active onClick={this.toggleView}>
+            Saved
+          </BottomButton>
+          <BottomButton active={false} onClick={this.toggleView}>
+            Manual
+          </BottomButton>
+        </Bottom>
       </Container>
     );
   }
 }
 
+const BottomButton = styled.section`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${p =>
+    p.active &&
+    'background: linear-gradient(to bottom,rgba(255, 119, 40, 1) 0%, rgba(252, 91, 31, 1) 100%)'}
+`;
+
+const Bottom = styled.section`
+  grid-column-start: 1;
+  grid-column-end: 4;
+  display: flex;
+`;
+
 const Undo = styled.span`
-  float: right;
+  position: fixed;
+  right: 50px;
   color: white;
 `;
 
@@ -121,7 +174,7 @@ const Button = styled.span`
 
 const Container = styled.div`
   position: absolute;
-  top: 70px;
+  top: 50px;
   bottom: 30px;
   left: 20px;
   right: 20px;
@@ -129,6 +182,6 @@ const Container = styled.div`
   background: rgba(255, 255, 255, 0.03);
   border-radius: 15px;
   /* padding: 15px; */
-  grid-template-rows: 1.2fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1.2fr 1fr 1fr 1fr 1fr 0.4fr;
   grid-template-columns: 1fr 1fr 1fr;
 `;

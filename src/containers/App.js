@@ -80,6 +80,8 @@ class App extends Component {
             {...this.state}
             addCalories={this.addCalories}
             subtractCalories={this.subtractCalories}
+            goal={this.props.user.calorieGoal}
+            consumed={this.props.user.consumedCalories}
           />
         );
       case true:
